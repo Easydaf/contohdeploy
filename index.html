@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tombol Animasi Sederhana</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Bebas+Neue&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="tampilan.css" />
+  </head>
+  <body>
+    <main class="hero">
+      <div class="halo"></div>
+      <section class="panel">
+        <p class="eyebrow">Demo Mini</p>
+        <h1>Satu Tombol, Satu Kejutan</h1>
+        <p class="subtitle">
+          Klik tombol di bawah dan nikmati animasi burst yang bersih dan halus.
+        </p>
+        <button id="magicBtn" class="magic-btn" type="button">Klik Aku</button>
+        <p id="statusText" class="status">Belum diklik</p>
+      </section>
+      <div id="sparkArea" class="spark-area" aria-hidden="true"></div>
+    </main>
+
+    <script src="animasi.js" defer></script>
+  </body>
+</html>
