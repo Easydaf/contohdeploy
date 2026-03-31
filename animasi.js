@@ -1,16 +1,12 @@
-const button = document.getElementById("magicBtn");
-const statusText = document.getElementById("statusText");
-const sparkArea = document.getElementById("sparkArea");
-
 const palette = ["#7dd3fc", "#fcd34d", "#fdba74", "#34d399", "#f9a8d4"];
 
-function createSparkBurst(originX, originY, count = 18) {
+function createSparkBurst(sparkArea, originX, originY, count = 22) {
   for (let i = 0; i < count; i += 1) {
     const spark = document.createElement("span");
     spark.className = "spark";
 
     const angle = (Math.PI * 2 * i) / count;
-    const distance = 60 + Math.random() * 70;
+    const distance = 70 + Math.random() * 90;
     const x = Math.cos(angle) * distance;
     const y = Math.sin(angle) * distance;
 
@@ -22,22 +18,40 @@ function createSparkBurst(originX, originY, count = 18) {
       palette[Math.floor(Math.random() * palette.length)];
 
     sparkArea.appendChild(spark);
-
-    spark.addEventListener("animationend", () => {
-      spark.remove();
+    spark.addEventListener("animationend", () => spark.remove(), {
+      once: true,
     });
   }
 }
 
-button.addEventListener("click", () => {
-  const rect = button.getBoundingClientRect();
-  const centerX = rect.left + rect.width / 2;
-  const centerY = rect.top + rect.height / 2;
+function initAnimation() {
+  const button = document.getElementById("magicBtn");
+  const statusText = document.getElementById("statusText");
+  const sparkArea = document.getElementById("sparkArea");
 
-  button.classList.remove("burst");
-  void button.offsetWidth;
-  button.classList.add("burst");
+  if (!button || !statusText || !sparkArea) {
+    console.error("Element animasi tidak ditemukan.");
+    return;
+  }
 
-  createSparkBurst(centerX, centerY);
-  statusText.textContent = "Wow! Animasi aktif";
-});
+  button.addEventListener("click", () => {
+    const buttonRect = button.getBoundingClientRect();
+    const areaRect = sparkArea.getBoundingClientRect();
+    const centerX = buttonRect.left + buttonRect.width / 2 - areaRect.left;
+    const centerY = buttonRect.top + buttonRect.height / 2 - areaRect.top;
+
+    button.classList.remove("burst");
+    requestAnimationFrame(() => {
+      button.classList.add("burst");
+    });
+
+    createSparkBurst(sparkArea, centerX, centerY);
+    statusText.textContent = "Wow! Animasi aktif";
+  });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initAnimation, { once: true });
+} else {
+  initAnimation();
+}
